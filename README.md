@@ -1,2 +1,3 @@
-# mab-work-shifts-project
-An automated work shifts assigner, specifically designed for mab archeological park
+# The MAB ARCHEOTUR work shifts assigner
+
+An automated work shifts assigner, specifically designed for mab archeotur
