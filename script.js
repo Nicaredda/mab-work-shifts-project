@@ -5,7 +5,19 @@ console.log("this is a test")
 
 // PROGETTO: 
 // una lista che si completi automaticamente per generare dei turni randomizzati per il numero dei colleghi dell'archeotur presso le varie aree del museo, 
-// tenendo conto anche del giorno libero
+// tenendo conto anche del giorno libero e dei giorni di ferie. viene salvato sul local storage del browser una valore booleano per poter alternare 
+// con la logica richiesta ogni giorno e ogni turno. 
+// ************************************************************************************************************************************************************
+// TO DO: 
+//      1) Inserire un elemento input che permetta di cambiare i giorni liberi e di ferie dei colleghi in lista; 
+//         utilizzeremo Local Storage del browser per salvare queste assegnazioni chiave/valore (perchè non capisco come fare tramite file json locale...lol)
+//      2) Implementare la possibilità di cambiare l'assegnazione di ogni collega in lista ad un turno della week, in base ad una specifica richiesta, e.g. Collga[0] requestedDay: monday.evening. 
+//         il programma se arriva a quel collega in monday morning, salterebbe il collega andando ad inserire il collega nell'apposito spazio
+
+
+
+
+
 
 const colleaguesList = [
     {name: "michela", workDays: 6, freeDay:"monday", vacationDays: [], workedDays: 0},
@@ -85,11 +97,13 @@ const week = [
         morningNecropoli2:undefined, eveningMuseo3:undefined
     }
 ]
+
+
 console.log("**NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST**")
 
 
 let alternated;
-if (localStorage.getItem("alternated") === "false") {
+if (localStorage.getItem("alternated") === "false") {  // <== facciamo riferimento al valore booleano in local storage per sapere come è il valore di alternated in seguito alla precedente esecuzione del codice
      alternated = false
 } else {
     alternated = true
@@ -128,15 +142,17 @@ for (const day in week) {
         };
     }
 
-    if (alternated === false) { 
+    if (alternated === false) { //<== logica di alternazione per il collega etnografico, la cui presenza è alternata ogni periodo e il sistema di alternazione si alterna ogni giorno
         alternated = true
     } else { 
         alternated = false
     }
-}  localStorage.setItem("alternated", alternated)
+}  localStorage.setItem("alternated", alternated) // <== utilizziamo per convenienza il local storage del browser per cambiare il valore booleano ad alternated
 
 
 console.log(colleaguesList)
+
+
 
 // QUI SOTTO VIENE SISTEMATA LA LISTA IN MODO CHE SIA FORMATTATA MEGLIO. I TURNI VENGONO RIMESSI IN ORDINE
 //_NECESSARIO, DATO CHE SOPRA NELLA LOGICA DEL CODICE VENGONO MESSI IN ORDINE DI PRIORITà DI ASSEGNAZIONE
@@ -242,16 +258,5 @@ function randomNumber(list) {
     randomResult = Math.floor(Math.random()*list.length);
     return randomResult;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
