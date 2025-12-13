@@ -17,10 +17,8 @@ console.log("this is a test")
 
 
 
-
-
 const colleaguesList = [
-    {name: "michela", workDays: 6, freeDay:"monday", vacationDays: [], workedDays: 0},
+    {name: "michela", workDays: 6, freeDay:"saturday", vacationDays: [], workedDays: 0},
     {name: "manola", workDays: 6, freeDay: "sunday", vacationDays: [], workedDays: 0},
     {name: "simona", workDays: 6, freeDay: "tuesday", vacationDays: [], workedDays: 0},
     {name: "matteo", workDays: 6, freeDay: "friday", vacationDays: [], workedDays: 0},
@@ -31,6 +29,14 @@ const colleaguesList = [
     {name: "ritaP", workDays: 6, freeDay: "wednesday", vacationDays: [], workedDays: 0},
     {name: "rita" ,workDays: 6, freeDay:  "sunday", vacationDays: [], workedDays: 0}
 ]
+
+
+// loop per settare il freeDay in local storage
+for (let i = 0; i<colleaguesList.length; i++) {
+    let name = colleaguesList[i].name
+    let freeDay = colleaguesList[i].freeDay;
+    localStorage.setItem(name, freeDay)
+}
 
 const week = [
     monday = { d: "monday",

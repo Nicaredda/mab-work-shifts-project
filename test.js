@@ -1,29 +1,11 @@
 
-/*
-const test = import(`/home/nicaredda/repositories/mab-work-shifts-project/test.json`);
-console.log(test)
-*/
-/*
-async function loadData() {
+// to add stuff to local storage, first convert the object to a list, then iterate from that list and add the strings
+/*let object = {uno: "alpha", due: "bravo", tre: "charlie"}
+let objectKeys = Object.keys(object)
+let objectValues = Object.values(object)
 
-    try {
-        const response = await fetch('./test.json'); 
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        const data = await response.json();
-            
-    } catch (error) {
-        console.error('Error fetching the JSON file:', error);
-    }
-    return data;
+// logic for adding key/value objects to local storage
+for (let i=0; i<objectKeys.length; i++) {    
+    localStorage.setItem(objectKeys[i], objectValues[i])
 }
-
-loadData()
-console.log(data)
-console.log(typeof(data))
-
 */
-
-
-console.log(data)
