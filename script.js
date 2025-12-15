@@ -31,12 +31,6 @@ const colleaguesList = [
 ]
 
 
-// loop per settare il freeDay in local storage
-for (let i = 0; i<colleaguesList.length; i++) {
-    let name = colleaguesList[i].name
-    let freeDay = colleaguesList[i].freeDay;
-    localStorage.setItem(name, freeDay)
-}
 
 const week = [
     monday = { d: "monday",
@@ -107,6 +101,12 @@ const week = [
 
 console.log("**NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST**")
 
+// loop per settare il freeDay in local storage
+for (let i = 0; i<colleaguesList.length; i++) {
+    let name = colleaguesList[i].name
+    let freeDay = colleaguesList[i].freeDay;
+    localStorage.setItem(name, freeDay)
+}
 
 let alternated;
 if (localStorage.getItem("alternated") === "false") {  // <== facciamo riferimento al valore booleano in local storage per sapere come è il valore di alternated in seguito alla precedente esecuzione del codice
@@ -115,7 +115,7 @@ if (localStorage.getItem("alternated") === "false") {  // <== facciamo riferimen
     alternated = true
 }
 
-
+//************************************************************************************************* LOGICA DI ASSEGNAZIONE RANDOMICA SPECIFICA PER IL MAB ******************************************************************************************************
 for (const day in week) {
     let workingList = [] 
     for (const worker in colleaguesList) {
@@ -154,10 +154,6 @@ for (const day in week) {
         alternated = false
     }
 }  localStorage.setItem("alternated", alternated) // <== utilizziamo per convenienza il local storage del browser per cambiare il valore booleano ad alternated
-
-
-console.log(colleaguesList)
-
 
 
 // QUI SOTTO VIENE SISTEMATA LA LISTA IN MODO CHE SIA FORMATTATA MEGLIO. I TURNI VENGONO RIMESSI IN ORDINE
@@ -207,7 +203,7 @@ for (let i = 0; i < week.length; i++) {
 
 const text = document.querySelector(`body`);
 
-
+// E qui sotto in loop mostriamo la scheda week ordinata nel file html
 for (const dayName in turns) {
     
     const day = turns[dayName];
@@ -256,13 +252,104 @@ for (const dayName in turns) {
     console.log("\n")
 }
 
-console.log(week)
-console.log(colleaguesList)
-
-
 function randomNumber(list) { 
     randomResult = Math.floor(Math.random()*list.length);
     return randomResult;
 }
 
+
+
+// ******************************************************* PARTE DOM ******************************************************************************
+// il bottone ci permetterà di avviare la fase di cambio valori della tabella o di conferma
+const assignmentButton = document.getElementById("assignmentButton") 
+assignmentButton.addEventListener("click", changeModeSwitch)
+
+// Realizziamo due liste con gli elementi relativi alle classi che ci interessano
+const vacDayText = document.querySelectorAll(".vacDayText");
+const vacDayInput = document.querySelectorAll(".vacDayInput");
+const freeDayText = document.querySelectorAll(".freeDayText")
+const freeDayInput = document.querySelectorAll(".freeDayInput")
+
+
+
+
+
+// Appena avviato il codice, questo ci permette di costruire già una tabella di base con gli ultimi valori salvati
+for (let i=0; i<freeDayText.length;i++){
+    freeDayText[i].textContent = localStorage.getItem(`freeDayCurrentText${i}`);
+}
+function displayFreeDayText(){
+    for (let i = 0; i<freeDayText.length; i++){
+        // settiamo la key in localstorage, il nome è sempre lo stesso, ma affianco al nome abbiamo un numero 
+        // dinamico preso dall'attuale indice del loop. il valore della key è quello dell'input attuale
+        // piccolo if/else per continuare a salvare il placeholder anche dopo che abbiamo azzerato i valori
+        if (freeDayInput[i].value !== ""){
+            localStorage.setItem(`freeDayCurrentText${i}`, freeDayInput[i].value);
+        } else  {
+            localStorage.setItem(`freeDayCurrentText${i}`, freeDayInput[i].placeholder)
+        };
+        freeDayInput[i].style.display = "none";
+        freeDayText[i].textContent = localStorage.getItem(`freeDayCurrentText${i}`);
+        freeDayText[i].style.display = "block"
+    }
+}
+function displayFreeDayInput(){
+    for (let i = 0; i<freeDayInput.length; i++){
+        // azzera i valori degli input
+        freeDayInput[i].value = null
+        // inserisce un placeholder preso dal localstorage
+        freeDayInput[i].placeholder = localStorage.getItem(`freeDayCurrentText${i}`);
+        // mostra la casella di input e nasconde la casella di testo cosi da usare lo stesso spazio
+        freeDayInput[i].style.display = "block";
+        freeDayText[i].style.display = "none";
+    }
+}
+
+// ripetiamo tutto ma per vacDay 
+for (let i=0; i<vacDayText.length;i++){
+    vacDayText[i].textContent = localStorage.getItem(`vacDayCurrentText${i}`);
+}
+function displayVacDayText(){
+    for (let i = 0; i<vacDayText.length; i++){
+        if (vacDayInput[i].value !== ""){
+            localStorage.setItem(`vacDayCurrentText${i}`, vacDayInput[i].value);
+        } else  {
+            localStorage.setItem(`vacDayCurrentText${i}`, vacDayInput[i].placeholder)
+        };
+        vacDayInput[i].style.display = "none";
+        vacDayText[i].textContent = localStorage.getItem(`vacDayCurrentText${i}`);
+        vacDayText[i].style.display = "block"
+    }
+}
+function displayVacDayInput(){
+    for (let i = 0; i<vacDayInput.length; i++){
+        vacDayInput[i].value = null
+        vacDayInput[i].placeholder = localStorage.getItem(`vacDayCurrentText${i}`);
+        vacDayInput[i].style.display = "block";
+        vacDayText[i].style.display = "none";
+    }
+}
+
+
+
+let changeMode = false
+function changeModeSwitch(){  
+    if (changeMode === false) {
+        displayFreeDayInput();
+        displayVacDayInput();
+        changeMode = true
+        assignmentButton.style.backgroundColor = "green"
+        assignmentButton.textContent = "Conferma"
+    } else {
+        displayFreeDayText();
+        displayVacDayText();
+        changeMode = false
+        assignmentButton.style.backgroundColor = "red"
+        assignmentButton.textContent = "Modifica"
+    }
+}
+//TO DO: 
+// 1) modificare dinamicamente la lista oggetti colleghi con i valori in localstorage, prendendo come dati validi solamente i dati che corrispondono al nome di giorni della settimana
+// 2) transporre la settimana generata come una tabella in html 
+// 3) realizzare un pulsante in html per eseguire le generazioni randomiche della week
 
