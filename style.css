@@ -7,6 +7,11 @@ table, th, td {
     color: white;
     border: 1px solid black;
 }
+#generateWeek {
+    background-color: rgb(238, 255, 0);
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+}
 .vacDayText {
     display: block;
 }
