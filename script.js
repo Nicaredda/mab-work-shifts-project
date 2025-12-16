@@ -300,7 +300,9 @@ function generateRandomWeek(){
     }
 
 
-    const text = document.querySelector(`body`);
+    const weekTable = document.createElement(`div`);
+    weekTable.id = "weekTable"
+    document.body.appendChild(weekTable)
 
     // E qui sotto in loop mostriamo la scheda week ordinata nel file html
     for (const dayName in turns) {
@@ -313,40 +315,40 @@ function generateRandomWeek(){
         let element = document.createElement(`div`);
         const nextLine = document.createElement(`br`)
         element.textContent = nomeGiorno
-        text.append(element)
-        text.append(nextLine)
+        weekTable.append(element)
+        weekTable.append(nextLine)
         
         let mattinaMuseo = `Mattina Museo: ${day.morning.museo.join(", ")}`;
         console.log(mattinaMuseo);
 
         element = document.createElement(`div`);
         element.textContent = mattinaMuseo
-        text.append(element)
-        text.append(nextLine)
+        weekTable.append(element)
+        weekTable.append(nextLine)
 
         let mattinaNecropoli = `Mattina Necropoli:, ${day.morning.necropoli.join(", ")}`;
         console.log(mattinaNecropoli);
         
         element = document.createElement(`div`);
         element.textContent = mattinaNecropoli
-        text.append(element)
-        text.append(nextLine)
+        weekTable.append(element)
+        weekTable.append(nextLine)
         
         let seraMuseo = `Sera Museo: ${day.evening.museo.join(", ")}`;
         console.log(seraMuseo)
         
         element = document.createElement(`div`);
         element.textContent = seraMuseo
-        text.append(element)
-        text.append(nextLine)
+        weekTable.append(element)
+        weekTable.append(nextLine)
         
         let seraNecropoli = `Sera Necropoli: ${day.evening.necropoli.join(", ")}`;
         console.log(seraNecropoli);
 
         element = document.createElement(`div`);
         element.textContent = seraNecropoli
-        text.append(element)
-        text.append(nextLine)
+        weekTable.append(element)
+        weekTable.append(nextLine)
 
         console.log("\n")
     }

@@ -1,16 +1,56 @@
-table, th, td {
-    border: 1px solid rgb(0, 0, 0);
-    border-collapse: collapse;
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    background-color: rgba(224, 224, 108, 0.349);
+    font-family: monospace;
 }
+
+tr {
+    background-color:rgba(240, 237, 241, 0.87);
+}
+
+td {
+    justify-items: center ;
+}
+th {
+    border: 1px solid;
+    border-radius: 5%;
+    background-color: rgba(226, 111, 220, 0.801);
+
+}
+
+table {
+    font-size: large;
+    border: 2px solid rgb(75, 5, 5);
+    border-radius: 10px;
+    background-color:rgb(226, 43, 52);
+    padding: 2px; 
+}
+
 #assignmentButton {
     background-color: red;
-    color: white;
-    border: 1px solid black;
+    align-self:flex-start ;
+    color: rgb(255, 255, 255);
+    font-size: large;
+    border: 2px solid black;
+    border-radius: 130%;
+    margin-top: 5px;
+    padding:8px;
+    font-family: monospace;
+    font-weight: 1000;
 }
 #generateWeek {
-    background-color: rgb(238, 255, 0);
+    padding: 8px;
+    background-color: rgb(235, 235, 46);
+    font-size: large;
     color: rgb(0, 0, 0);
-    border: 1px solid black;
+    border: 2px solid black;
+    border-radius: 50px;
+    margin-top: 5px;
+    align-self: flex-start;
+    font-family: monospace;
+    font-weight: 1000;
 }
 .vacDayText {
     display: block;
@@ -23,4 +63,16 @@ table, th, td {
 }
 .freeDayInput {
     display: none;
+}
+
+#weekTable {
+    display: flex;
+    flex-direction:column;
+    width:500px;
+    padding: 10px;
+    margin: 5px;
+    font-size: 18px;
+}
+
+div {
 }
