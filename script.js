@@ -152,7 +152,13 @@ for (let i=0; i<vacDayText.length;i++){
 function displayVacDayText(){
     for (let i = 0; i<vacDayText.length; i++){
         if (vacDayInput[i].value !== ""){
-            localStorage.setItem(`vacDayCurrentText${i}`, vacDayInput[i].value);
+            let inputWord = vacDayInput[i].value
+            if ( inputWord[inputWord.length-1] === "i"){
+                inputWord = inputWord.split('')
+                inputWord.splice(inputWord.length-1, 1, "ì")
+                inputWord = inputWord.join('')
+            }
+            localStorage.setItem(`vacDayCurrentText${i}`, inputWord.toLowerCase());
         } else  {
             localStorage.setItem(`vacDayCurrentText${i}`, vacDayInput[i].placeholder)
         };
