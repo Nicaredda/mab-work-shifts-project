@@ -8,14 +8,6 @@ console.log("this is a test")
 // tenendo conto anche del giorno libero e dei giorni di ferie. viene salvato sul local storage del browser una valore booleano per poter alternare 
 // con la logica richiesta ogni giorno e ogni turno. 
 // ************************************************************************************************************************************************************
-// TO DO: 
-// 1) DONE Inserire un elemento input che permetta di cambiare i giorni liberi e di ferie dei colleghi in lista; 
-//      utilizzeremo Local Storage del browser per salvare queste assegnazioni chiave/valore (perchè non capisco come fare tramite file json locale...lol)
-// 2) Implementare la possibilità di cambiare l'assegnazione di ogni collega in lista ad un turno della week, in base ad una specifica richiesta, e.g. Collga[0] requestedDay: monday.evening. 
-//      il programma se arriva a quel collega in monday morning, salterebbe il collega andando ad inserire il collega nell'apposito spazio
-// 3) DONE modificare dinamicamente la lista oggetti colleghi con i valori in localstorage, prendendo come dati validi solamente i dati che corrispondono al nome di giorni della settimana
-// 4) transporre la settimana generata come una tabella in html 
-// 5) DONE realizzare un pulsante in html per eseguire le generazioni randomiche della week
 
 const colleaguesList = [
     {name: "michela", workDays: 6, freeDay:"saturday", vacationDays: [], workedDays: 0},
@@ -31,7 +23,7 @@ const colleaguesList = [
 ]
 
 const week = [
-    monday = { d: "monday",
+    lunedì = { d: "lunedì",
         //priorità: bassa
         morningMuseo1:undefined, morningMuseo2:undefined,
         morningNecropoli1:undefined, morningMuseo3:undefined, 
@@ -40,7 +32,7 @@ const week = [
         //priorità: alta
         morningNecropoli2:undefined, eveningMuseo3:undefined
         },
-    tuesday = { d: "tuesday",
+    martedì = { d: "martedì",
         //priorità: bassa
         morningMuseo1:undefined, morningMuseo2:undefined,
         morningNecropoli1:undefined, morningMuseo3:undefined, 
@@ -49,7 +41,7 @@ const week = [
         //priorità: alta
         morningNecropoli2:undefined, eveningMuseo3:undefined
         },
-    wednesday = { d: "wednesday",
+    mercoledì = { d: "mercoledì",
         //priorità: bassa
         morningMuseo1:undefined, morningMuseo2:undefined,
         morningNecropoli1:undefined, morningMuseo3:undefined, 
@@ -58,7 +50,7 @@ const week = [
         //priorità: alta
         morningNecropoli2:undefined, eveningMuseo3:undefined
         },
-    thursday = { d: "thursday",
+    giovedì = { d: "giovedì",
         //priorità: bassa
         morningMuseo1:undefined, morningMuseo2:undefined,
         morningNecropoli1:undefined, morningMuseo3:undefined, 
@@ -67,7 +59,7 @@ const week = [
         //priorità: alta
         morningNecropoli2:undefined, eveningMuseo3:undefined
         },
-    friday = { d: "friday",
+    venerdì = { d: "venerdì",
         //priorità: bassa
         morningMuseo1:undefined, morningMuseo2:undefined,
         morningNecropoli1:undefined, morningMuseo3:undefined, 
@@ -76,7 +68,7 @@ const week = [
         //priorità: alta
         morningNecropoli2:undefined, eveningMuseo3:undefined
         },
-    saturday = { d: "saturday",
+    sabato = { d: "sabato",
         //priorità: bassa
         morningMuseo1:undefined, morningMuseo2:undefined,
         morningNecropoli1:undefined, morningMuseo3:undefined, 
@@ -85,7 +77,7 @@ const week = [
         //priorità: alta
         morningNecropoli2:undefined, eveningMuseo3:undefined
         },
-    sunday = { d: "sunday",
+    domenica = { d: "domenica",
         //priorità: bassa
         morningMuseo1:undefined, morningMuseo2:undefined,
         morningNecropoli1:undefined, morningMuseo3:undefined, 
@@ -96,22 +88,26 @@ const week = [
     }
 ]
 // Ci prendiamo subito i valori in localstorage con la funzione che riassegna ad ogni elemento in lista colleagues i suoi valori salvati
+function colleaguesListValuesAssignment(){
+    for (let i = 0; i<colleaguesList.length; i++){
+        colleaguesList[i].freeDay = localStorage.getItem(`freeDayCurrentText${i}`)
+        colleaguesList[i].vacationDays = localStorage.getItem(`vacDayCurrentText${i}`)
+    }
+}
+
 colleaguesListValuesAssignment();
 
 console.log("**NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST****NEW TEST**")
 
-// ***********************************************PARTE DOM DI COSTRUZIONE TABELLA COLLEAGUES LIST IN HTML ******************************************************************************
-
-
-// il bottone ci permetterà di avviare la fase di cambio valori della tabella o di conferma
-const assignmentButton = document.getElementById("assignmentButton") 
-assignmentButton.addEventListener("click", changeModeSwitch)
 
 // Realizziamo due liste con gli elementi relativi alle classi che ci interessano
 const vacDayText = document.querySelectorAll(".vacDayText");
 const vacDayInput = document.querySelectorAll(".vacDayInput");
 const freeDayText = document.querySelectorAll(".freeDayText")
 const freeDayInput = document.querySelectorAll(".freeDayInput")
+
+
+
 
 // Appena avviato il codice, questo ci permette di costruire già una tabella di base con gli ultimi valori salvati
 for (let i=0; i<freeDayText.length;i++){
@@ -123,7 +119,13 @@ function displayFreeDayText(){
         // dinamico preso dall'attuale indice del loop. il valore della key è quello dell'input attuale
         // piccolo if/else per continuare a salvare il placeholder anche dopo che abbiamo azzerato i valori
         if (freeDayInput[i].value !== ""){
-            localStorage.setItem(`freeDayCurrentText${i}`, freeDayInput[i].value);
+            let inputWord = freeDayInput[i].value
+            if ( inputWord[inputWord.length-1] === "i"){
+                inputWord = inputWord.split('')
+                inputWord.splice(inputWord.length-1, 1, "ì")
+                inputWord = inputWord.join('')
+            }
+            localStorage.setItem(`freeDayCurrentText${i}`, inputWord.toLowerCase());
         } else  {
             localStorage.setItem(`freeDayCurrentText${i}`, freeDayInput[i].placeholder)
         };
@@ -143,7 +145,6 @@ function displayFreeDayInput(){
         freeDayText[i].style.display = "none";
     }
 }
-
 // ripetiamo tutto ma per vacDay 
 for (let i=0; i<vacDayText.length;i++){
     vacDayText[i].textContent = localStorage.getItem(`vacDayCurrentText${i}`);
@@ -169,8 +170,12 @@ function displayVacDayInput(){
     }
 }
 
+// il bottone ci permetterà di avviare la fase di cambio valori della tabella o di conferma
+const assignmentButton = document.getElementById("assignmentButton") 
+assignmentButton.addEventListener("click", changeColleaguesTable)
+
 let changeMode = false
-function changeModeSwitch(){  
+function changeColleaguesTable(){  //
     if (changeMode === false) {
         displayFreeDayInput();
         displayVacDayInput();
@@ -187,90 +192,69 @@ function changeModeSwitch(){
     }
 }
 
-function colleaguesListValuesAssignment(){
-    for (let i = 0; i<colleaguesList.length; i++){
-        colleaguesList[i].freeDay = localStorage.getItem(`freeDayCurrentText${i}`)
-        colleaguesList[i].vacationDays = localStorage.getItem(`vacDayCurrentText${i}`)
+
+
+function getAlternatedFromStorage(){
+    if (localStorage.getItem("alternated") === "false") {  // <== facciamo riferimento al valore booleano in local storage per sapere come è il valore di alternated in seguito alla precedente esecuzione del codice
+        onOff = false
+        return onOff
+    } else {
+        onOff = true
+        return onOff
     }
 }
-
-console.log(colleaguesList)
-// ****************************ALTERNATED CI SERVE PER LA LOGICA DI ASSEGNAZIONE DEL COLLEGA ETNOGRAFICO**************************************************************
-let alternated;
-if (localStorage.getItem("alternated") === "false") {  // <== facciamo riferimento al valore booleano in local storage per sapere come è il valore di alternated in seguito alla precedente esecuzione del codice
-     alternated = false
-} else {
-    alternated = true
+function setAlternatedInStorage(onOff){
+    if (onOff === false) { //<== logica di alternazione per il collega etnografico, la cui presenza è alternata ogni periodo e il sistema di alternazione si alterna ogni giorno
+        onOff = true
+    } else { 
+        onOff = false
+    } localStorage.setItem("alternated", onOff) // <== utilizziamo per convenienza il local storage del browser per cambiare il valore booleano ad alternated
+}  
+function randomNumber(list) { 
+    randomResult = Math.floor(Math.random()*list.length);
+    return randomResult;
 }
-
-//************************************************** LOGICA DI ASSEGNAZIONE RANDOMICA SPECIFICA PER I TURNI DELLA WEEK ******************************************************************************************************
-function generateRandomWeek(){
-
+function removeWeekTable(){ // rimuoviamo la week generata cosi che non le stacka l'una sopra l'altra. Son solo un mucchio di div e br
     let allDivs = document.querySelectorAll("div");
     let allBrs =  document.querySelectorAll("br");
-// rimuoviamo la week generata cosi che non le stacka l'una sopra l'altra. Son solo un mucchio di div e br
     for (let i = 0; i<allDivs.length; i++){ 
         allDivs[i].remove()
     }  for (let i = 0; i<allBrs.length; i++){ 
         allBrs[i].remove()
     } 
-// Generiamo la week. Gigantesca funzione che racchiude praticamente ogni cosa
-    for (const day in week) {
-        let workingList = [] 
-        for (const worker in colleaguesList) {
-            if (colleaguesList[worker].freeDay.includes(week[day].d)  || colleaguesList[worker].vacationDays.includes(week[day].d)) {
+}
+function generateWorkingList(workingList, day){
+    for (const worker in colleaguesList) {
+        if (colleaguesList[worker].freeDay.includes(week[day].d)  || colleaguesList[worker].vacationDays.includes(week[day].d)) {
             continue;
-            } workingList.push(colleaguesList[worker].name);
-        }
+        } workingList.push(colleaguesList[worker].name);
+    } 
+    return workingList;
+}
+function assignAndRemoveFromList(workingList, day, key){
+    let randomIndex = randomNumber(workingList);
+    let randomColleague = workingList[randomIndex];
+    week[day][key] = randomColleague;
 
-        for (const key of Object.keys(week[day])) { 
-            if (key === "d") { //  <== Skippa una iterazione se la chiave è "d", perchè "d" è la chiave contenente il nome del giorno, e non vogliamo sovrascriverla 
-                continue;
-            } if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === true) {
-                week[day][key] = "COLLEGA ETNOGRAFICO"
-                alternated = false
-                continue;
-            } else if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === false) {
-                alternated = true
+    if (workingList.includes(randomColleague)) {  // <== depenniamo i colleghi dalla lista man mano che li assegniamo
+        for (worker in colleaguesList) {
+            if (colleaguesList[worker].name === randomColleague) {
+                colleaguesList[worker].workedDays ++
             }
-            let randomIndex = randomNumber(workingList);
-            let randomColleague = workingList[randomIndex];
-            week[day][key] = randomColleague;
-        
-            if (workingList.includes(randomColleague)) {  // <== depenniamo i colleghi dalla lista man mano che li assegniamo
-                for (worker in colleaguesList) {
-                    if (colleaguesList[worker].name === randomColleague) {
-                                colleaguesList[worker].workedDays ++
-                    }
-                }
-                workingList.splice(randomIndex,1,)
-            };
         }
-
-        if (alternated === false) { //<== logica di alternazione per il collega etnografico, la cui presenza è alternata ogni periodo e il sistema di alternazione si alterna ogni giorno
-            alternated = true
-        } else { 
-            alternated = false
-        }
-    }  localStorage.setItem("alternated", alternated) // <== utilizziamo per convenienza il local storage del browser per cambiare il valore booleano ad alternated
-//***********************************DINAMIC ASSIGNMENT TO COLLEAGUE LIST ITEMS*************************************************************************************** */
-
-// QUI SOTTO VIENE SISTEMATA LA LISTA IN MODO CHE SIA FORMATTATA MEGLIO. I TURNI VENGONO RIMESSI IN ORDINE
-//_NECESSARIO, DATO CHE SOPRA NELLA LOGICA DEL CODICE VENGONO MESSI IN ORDINE DI PRIORITà DI ASSEGNAZIONE
-
-
+        workingList.splice(randomIndex,1,)
+    } return workingList;
+}
+function translateTurns(){
     let turns = {
-        monday:    { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
-        tuesday:   { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
-        wednesday: { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
-        thursday:  { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
-        friday:    { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
-        saturday:  { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
-        sunday:    { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
+        lunedì:    { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
+        martedì:   { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
+        mercoledì: { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
+        giovedì:  { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
+        venerdì:    { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
+        sabato:  { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
+        domenica:    { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
     };
-    const dayNames = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"];
-
-
 
     for (let i = 0; i < week.length; i++) {
         const day = week[i];
@@ -298,16 +282,16 @@ function generateRandomWeek(){
             day.eveningNecropoli2,
         ];
     }
-
-
+    return turns;
+}
+function appendTranslatedTableToDom(translatedTurns){   
     const weekTable = document.createElement(`div`);
     weekTable.id = "weekTable"
-    document.body.appendChild(weekTable)
-
-    // E qui sotto in loop mostriamo la scheda week ordinata nel file html
-    for (const dayName in turns) {
+    document.body.append(weekTable)     
+    
+    for (const dayName in translatedTurns) {
         
-        const day = turns[dayName];
+        const day = translatedTurns[dayName];
         
         let nomeGiorno = `======== ${dayName.toUpperCase()} ========`;
         console.log(nomeGiorno);
@@ -349,25 +333,47 @@ function generateRandomWeek(){
         element.textContent = seraNecropoli
         weekTable.append(element)
         weekTable.append(nextLine)
-
-        console.log("\n")
+    
     }
-
 }
 
 
-function randomNumber(list) { 
-    randomResult = Math.floor(Math.random()*list.length);
-    return randomResult;
+
+function hideHint(){
+    let hint =  document.querySelector("#hint")
+    hint.style.visibility = "hidden"
 }
-
-
-console.log(colleaguesList)
-
-
-
 const generateWeekButton = document.getElementById("generateWeek")
 generateWeekButton.addEventListener("click", generateRandomWeek);
+generateWeekButton.addEventListener("click", hideHint);
+
+
+function generateRandomWeek(){ // programma
+    removeWeekTable()
+    let alternated = getAlternatedFromStorage();
+
+    for (const day in week){
+        let workingList = [] 
+        generateWorkingList(workingList, day);
+        for (const key of Object.keys(week[day])) { 
+            if (key === "d") {  
+                continue;
+            } if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === true) {
+                week[day][key] = "COLLEGA ETNOGRAFICO"
+                alternated = false
+                continue;
+            } else if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === false) {
+                alternated = true
+            }
+
+            assignAndRemoveFromList(workingList, day, key);  
+        }  
+        setAlternatedInStorage(alternated);
+    }
+    let translatedTurns = translateTurns();
+    appendTranslatedTableToDom(translatedTurns);    
+}
+
 
 
 
