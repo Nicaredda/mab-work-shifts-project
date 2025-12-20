@@ -203,7 +203,7 @@ function changeColleaguesTable(){  //
 
 
 
-function getAlternatedFromStorage(){
+function getAlternatedFromStorage(onOff){
     if (localStorage.getItem("alternated") === "false") {  // <== facciamo riferimento al valore booleano in local storage per sapere come è il valore di alternated in seguito alla precedente esecuzione del codice
         onOff = false
         return onOff
@@ -358,10 +358,10 @@ generateWeekButton.addEventListener("click", hideHint);
 
 
 function generateRandomWeek(){ // programma
-    removeWeekTable()
-    let alternated = getAlternatedFromStorage();
 
+    removeWeekTable()
     for (const day in week){
+        let alternated = getAlternatedFromStorage();
         let workingList = [] 
         generateWorkingList(workingList, day);
         for (const key of Object.keys(week[day])) { 
@@ -370,9 +370,11 @@ function generateRandomWeek(){ // programma
             } if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === true) {
                 week[day][key] = "COLLEGA ETNOGRAFICO"
                 alternated = false
+                console.log(`${week[day].d}${key} was alternated, switched to False`)
                 continue;
-            } else if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === false) {
+            } if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === false) {
                 alternated = true
+                console.log(`${week[day].d}${key} was NOT alternated, switched to True`)
             }
 
             assignAndRemoveFromList(workingList, day, key);  
@@ -382,9 +384,4 @@ function generateRandomWeek(){ // programma
     let translatedTurns = translateTurns();
     appendTranslatedTableToDom(translatedTurns);    
 }
-
-
-
-
-
 
