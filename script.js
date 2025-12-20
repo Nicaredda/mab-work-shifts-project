@@ -10,16 +10,16 @@ console.log("this is a test")
 // ************************************************************************************************************************************************************
 
 const colleaguesList = [
-    {name: "michela", workDays: 6, freeDay:"saturday", vacationDays: [], workedDays: 0},
-    {name: "manola", workDays: 6, freeDay: "sunday", vacationDays: [], workedDays: 0},
-    {name: "simona", workDays: 6, freeDay: "tuesday", vacationDays: [], workedDays: 0},
-    {name: "matteo", workDays: 6, freeDay: "friday", vacationDays: [], workedDays: 0},
-    {name: "daniela", workDays: 6, freeDay:"sunday", vacationDays: [], workedDays: 0},
-    {name: "annamaria", workDays: 6, freeDay: "saturday", vacationDays: [], workedDays: 0},
-    {name: "grazia", workDays: 6, freeDay: "monday", vacationDays: [], workedDays: 0},
-    {name: "luisella", workDays: 6, freeDay: "thursday", vacationDays: [], workedDays: 0},
-    {name: "ritaP", workDays: 6, freeDay: "wednesday", vacationDays: [], workedDays: 0},
-    {name: "rita" ,workDays: 6, freeDay:  "sunday", vacationDays: [], workedDays: 0}
+    {name: "michela", workDays: 6, freeDay:"", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "manola", workDays: 6, freeDay: "", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "simona", workDays: 6, freeDay: "", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "matteo", workDays: 6, freeDay: "", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "daniela", workDays: 6, freeDay:"", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "annamaria", workDays: 6, freeDay: "", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "grazia", workDays: 6, freeDay: "", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "luisella", workDays: 6, freeDay: "", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "ritaP", workDays: 6, freeDay: "", vacationDays: [], requestedDay: [], workedDays: 0},
+    {name: "rita" ,workDays: 6, freeDay:  "", vacationDays: [], requestedDay: [], workedDays: 0}
 ]
 
 const week = [
@@ -154,13 +154,23 @@ function displayVacDayText(){
         if (vacDayInput[i].value !== "" && vacDayInput[i].value !== " "){
             
             let inputWord = vacDayInput[i].value;
-            inputWord = inputWord.split(" ");
+            //if statement che splitta per spazio tra parole se becca spazio e virgola o solo spazio, o splitta le parole per virgole se becca solo virgola
+            if (inputWord.includes(" ") && inputWord.includes(",") || inputWord.includes(" ")){
+                inputWord = inputWord.split(" ")
+            } else if (inputWord.includes(",")){
+                inputWord = inputWord.split(",")
+            }  // per ogni elemento del nuovo array inputWord, questo viene splittato per controllare ogni lettera
             for (j in inputWord) {
                 inputWord[j] = inputWord[j].split("");
+                // prima di tutto se alla fine della parola troviamo una virgola, togliamo quella virgola
+                if (inputWord[j][inputWord[j].length-1] === ","){
+                    inputWord[j].splice(inputWord[j].length-1, 1)
+                }   
+                // e poi se alla fine della parola troviamo una i senza accento, la sostituiamo con una ì accentata per poter passare il dato più facilmente al blocco dati 
                 if (inputWord[j][inputWord[j].length-1] === "i"){
                     inputWord[j].splice(inputWord[j].length-1, 1, "ì")
-                }   inputWord[j] = inputWord[j].join('')
-            } inputWord = inputWord.join(" ");
+                }   inputWord[j] = inputWord[j].join('') // <== ricolleghiamo tutte le lettere per ogni elemetno dell'array inputWord
+            } inputWord = inputWord.join(" "); // <== ricolleghiamo gli elementi dell'array per costruire nuovamente la stringa, ora fixata e pronta per essere data al local storage
             localStorage.setItem(`vacDayCurrentText${i}`, inputWord.toLowerCase());
         } else  {
             localStorage.setItem(`vacDayCurrentText${i}`, vacDayInput[i].placeholder)
@@ -357,8 +367,7 @@ generateWeekButton.addEventListener("click", generateRandomWeek);
 generateWeekButton.addEventListener("click", hideHint);
 
 
-function generateRandomWeek(){ // programma
-
+function generateRandomWeek(){ // programma principale che verrà azionato dal bottone
     removeWeekTable()
     for (const day in week){
         let alternated = getAlternatedFromStorage();
@@ -370,11 +379,9 @@ function generateRandomWeek(){ // programma
             } if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === true) {
                 week[day][key] = "COLLEGA ETNOGRAFICO"
                 alternated = false
-                console.log(`${week[day].d}${key} was alternated, switched to False`)
                 continue;
             } if ((key === "morningNecropoli1" || key === "eveningNecropoli1") && alternated === false) {
                 alternated = true
-                console.log(`${week[day].d}${key} was NOT alternated, switched to True`)
             }
 
             assignAndRemoveFromList(workingList, day, key);  
@@ -385,3 +392,33 @@ function generateRandomWeek(){ // programma
     appendTranslatedTableToDom(translatedTurns);    
 }
 
+
+
+
+/*
+
+document.createElement("")
+
+
+
+function requestDays(worker, day, period){
+    if (colleaguesList[worker].requestedDay.()){}
+}
+
+
+
+*/
+
+
+
+
+/*
+function generateWorkingList(workingList, day){
+    for (const worker in colleaguesList) {
+        if (colleaguesList[worker].freeDay.includes(week[day].d)  || colleaguesList[worker].vacationDays.includes(week[day].d)) {
+            continue;
+        } workingList.push(colleaguesList[worker].name);
+    } 
+    return workingList;
+}
+*/
