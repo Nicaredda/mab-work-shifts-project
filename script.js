@@ -151,12 +151,20 @@ for (let i=0; i<vacDayText.length;i++){
 }
 function displayVacDayText(){
     for (let i = 0; i<vacDayText.length; i++){
-        if (vacDayInput[i].value !== ""){
+        if (vacDayInput[i].value !== "" && vacDayInput[i].value !== " "){
+            
             let inputWord = vacDayInput[i].value
-            if ( inputWord[inputWord.length-1] === "i"){
-                inputWord = inputWord.split('')
-                inputWord.splice(inputWord.length-1, 1, "ì")
-                inputWord = inputWord.join('')
+            
+            // NON FUNZIONA, MA NON CAPISCO IL PERCHE'
+            if (inputWord.includes(" ")){
+                inputWord = inputWord.split(" ");
+                for (i in inputWord) {
+                    if (inputWord[i].length-1 === "i"){
+                        inputWord[i] = inputWord[i].split("");
+                        inputWord[i].splice(inputWord[i].length-1, 1, "ì")
+                        inputWord[i] = inputWord[i].join('')
+                    }
+                } inputWord = inputWord.join(" ");
             }
             localStorage.setItem(`vacDayCurrentText${i}`, inputWord.toLowerCase());
         } else  {
@@ -382,12 +390,7 @@ function generateRandomWeek(){ // programma
 
 
 
-
-
-
-
-
-
+// QUESTA E' QUELLA GIUSTA
 
 
 

@@ -12,13 +12,4 @@ il programma se arriva a quel collega in monday morning, salterebbe il collega a
 
 
 
-// Devo controllare in isolametno questa parte e vedere se può fare al caso mio
-/*
-for (i in inputWord) {
-    let arrayInputWord = inputWord[i].split("")
-    let indexOfI = arrayInputWord.findIndex(foundI);
-    if (indexOfI > 5){
-        arrayInputWord.splice(arrayInputWord[indexOfI], 1, "ì")
-    } arrayInputWord.join("")
-}
-*/   
+
