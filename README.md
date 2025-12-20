@@ -7,3 +7,18 @@ An automated work shifts assigner, specifically designed for mab archeotur
 1) correggere la funzionedisplayVacDayText in modo che splitti più parole e corregga ogni i senza accento di ogni parola
 2) Implementare la possibilità di cambiare l'assegnazione di ogni collega in lista ad un turno della week
 il programma se arriva a quel collega in monday morning, salterebbe il collega andando ad inserire il collega nell'apposito spazio
+
+
+
+
+
+// Devo controllare in isolametno questa parte e vedere se può fare al caso mio
+/*
+for (i in inputWord) {
+    let arrayInputWord = inputWord[i].split("")
+    let indexOfI = arrayInputWord.findIndex(foundI);
+    if (indexOfI > 5){
+        arrayInputWord.splice(arrayInputWord[indexOfI], 1, "ì")
+    } arrayInputWord.join("")
+}
+*/   
