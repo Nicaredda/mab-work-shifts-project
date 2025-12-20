@@ -153,19 +153,14 @@ function displayVacDayText(){
     for (let i = 0; i<vacDayText.length; i++){
         if (vacDayInput[i].value !== "" && vacDayInput[i].value !== " "){
             
-            let inputWord = vacDayInput[i].value
-            
-            // NON FUNZIONA, MA NON CAPISCO IL PERCHE'
-            if (inputWord.includes(" ")){
-                inputWord = inputWord.split(" ");
-                for (i in inputWord) {
-                    if (inputWord[i].length-1 === "i"){
-                        inputWord[i] = inputWord[i].split("");
-                        inputWord[i].splice(inputWord[i].length-1, 1, "ì")
-                        inputWord[i] = inputWord[i].join('')
-                    }
-                } inputWord = inputWord.join(" ");
-            }
+            let inputWord = vacDayInput[i].value;
+            inputWord = inputWord.split(" ");
+            for (j in inputWord) {
+                inputWord[j] = inputWord[j].split("");
+                if (inputWord[j][inputWord[j].length-1] === "i"){
+                    inputWord[j].splice(inputWord[j].length-1, 1, "ì")
+                }   inputWord[j] = inputWord[j].join('')
+            } inputWord = inputWord.join(" ");
             localStorage.setItem(`vacDayCurrentText${i}`, inputWord.toLowerCase());
         } else  {
             localStorage.setItem(`vacDayCurrentText${i}`, vacDayInput[i].placeholder)
@@ -390,7 +385,6 @@ function generateRandomWeek(){ // programma
 
 
 
-// QUESTA E' QUELLA GIUSTA
 
 
 
