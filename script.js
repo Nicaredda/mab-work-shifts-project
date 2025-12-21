@@ -223,13 +223,7 @@ function randomNumber(list) {
     return randomResult;
 }
 function removeWeekTable(){ // rimuoviamo la week generata cosi che non le stacka l'una sopra l'altra. Son solo un mucchio di div e br
-    let allDivs = document.querySelectorAll("div");
-    let allBrs =  document.querySelectorAll("br");
-    for (let i = 0; i<allDivs.length; i++){ 
-        allDivs[i].remove()
-    }  for (let i = 0; i<allBrs.length; i++){ 
-        allBrs[i].remove()
-    } 
+    weekTable.remove(); 
 }
 function generateWorkingList(workingList, day){
     for (const worker in colleaguesList) {
@@ -292,8 +286,9 @@ function translateTurns(){
     }
     return turns;
 }
+
 function appendTranslatedTableToDom(translatedTurns){   
-    const weekTable = document.createElement(`div`);
+    const weekTable = document.createElement(`table`);
     weekTable.id = "weekTable"
     document.body.append(weekTable)     
     
@@ -301,10 +296,11 @@ function appendTranslatedTableToDom(translatedTurns){
         
         const day = translatedTurns[dayName];
         
-        let nomeGiorno = `======== ${dayName.toUpperCase()} ========`;
+        let nomeGiorno = ` ${dayName.toUpperCase()} `;
         console.log(nomeGiorno);
         
-        let element = document.createElement(`div`);
+        let element = document.createElement(`th`);
+        element.classList.add("weekDays")
         const nextLine = document.createElement(`br`)
         element.textContent = nomeGiorno
         weekTable.append(element)
@@ -313,7 +309,7 @@ function appendTranslatedTableToDom(translatedTurns){
         let mattinaMuseo = `Mattina Museo: ${day.morning.museo.join(", ")}`;
         console.log(mattinaMuseo);
 
-        element = document.createElement(`div`);
+        element = document.createElement(`tr`);
         element.textContent = mattinaMuseo
         weekTable.append(element)
         weekTable.append(nextLine)
@@ -321,7 +317,7 @@ function appendTranslatedTableToDom(translatedTurns){
         let mattinaNecropoli = `Mattina Necropoli:, ${day.morning.necropoli.join(", ")}`;
         console.log(mattinaNecropoli);
         
-        element = document.createElement(`div`);
+        element = document.createElement(`tr`);
         element.textContent = mattinaNecropoli
         weekTable.append(element)
         weekTable.append(nextLine)
@@ -329,7 +325,7 @@ function appendTranslatedTableToDom(translatedTurns){
         let seraMuseo = `Sera Museo: ${day.evening.museo.join(", ")}`;
         console.log(seraMuseo)
         
-        element = document.createElement(`div`);
+        element = document.createElement(`tr`);
         element.textContent = seraMuseo
         weekTable.append(element)
         weekTable.append(nextLine)
@@ -337,7 +333,7 @@ function appendTranslatedTableToDom(translatedTurns){
         let seraNecropoli = `Sera Necropoli: ${day.evening.necropoli.join(", ")}`;
         console.log(seraNecropoli);
 
-        element = document.createElement(`div`);
+        element = document.createElement(`tr`);
         element.textContent = seraNecropoli
         weekTable.append(element)
         weekTable.append(nextLine)

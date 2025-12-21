@@ -22,13 +22,16 @@ th {
 
 }
 
+.weekDays {
+    background-color: rgba(255, 0, 0, 0.479);
+    border-radius: 3cap;
+}
 
-table {
+#colleaguesList {
     font-size: large;
     border: 2px solid rgb(14, 0, 0);
     border-radius: 10px;
     background-color:rgba(255, 6, 6, 0);
-     
 }
 
 #assignmentButton {
@@ -75,7 +78,7 @@ table {
     padding: 10px;
     margin: 5px;
     font-size: 18px;
-}
-
-div {
+    background-color: rgba(250, 246, 10, 0.603);
+    border-radius: 3cap;
+    border: 3px solid black;
 }
