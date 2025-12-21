@@ -120,11 +120,7 @@ function displayFreeDayText(){
         // piccolo if/else per continuare a salvare il placeholder anche dopo che abbiamo azzerato i valori
         if (freeDayInput[i].value !== ""){
             let inputWord = freeDayInput[i].value
-            if ( inputWord[inputWord.length-1] === "i"){
-                inputWord = inputWord.split('')
-                inputWord.splice(inputWord.length-1, 1, "ì")
-                inputWord = inputWord.join('')
-            }
+            inputWord = sobstituteI(inputWord);
             localStorage.setItem(`freeDayCurrentText${i}`, inputWord.toLowerCase());
         } else  {
             localStorage.setItem(`freeDayCurrentText${i}`, freeDayInput[i].placeholder)
@@ -157,20 +153,13 @@ function displayVacDayText(){
             //if statement che splitta per spazio tra parole se becca spazio e virgola o solo spazio, o splitta le parole per virgole se becca solo virgola
             if (inputWord.includes(" ") && inputWord.includes(",") || inputWord.includes(" ")){
                 inputWord = inputWord.split(" ")
+                inputWord = specialRemoveIVacDay(inputWord);
             } else if (inputWord.includes(",")){
                 inputWord = inputWord.split(",")
-            }  // per ogni elemento del nuovo array inputWord, questo viene splittato per controllare ogni lettera
-            for (j in inputWord) {
-                inputWord[j] = inputWord[j].split("");
-                // prima di tutto se alla fine della parola troviamo una virgola, togliamo quella virgola
-                if (inputWord[j][inputWord[j].length-1] === ","){
-                    inputWord[j].splice(inputWord[j].length-1, 1)
-                }   
-                // e poi se alla fine della parola troviamo una i senza accento, la sostituiamo con una ì accentata per poter passare il dato più facilmente al blocco dati 
-                if (inputWord[j][inputWord[j].length-1] === "i"){
-                    inputWord[j].splice(inputWord[j].length-1, 1, "ì")
-                }   inputWord[j] = inputWord[j].join('') // <== ricolleghiamo tutte le lettere per ogni elemetno dell'array inputWord
-            } inputWord = inputWord.join(" "); // <== ricolleghiamo gli elementi dell'array per costruire nuovamente la stringa, ora fixata e pronta per essere data al local storage
+                inputWord = specialRemoveIVacDay(inputWord);
+            } else {
+                inputWord = sobstituteI(inputWord)
+            }  
             localStorage.setItem(`vacDayCurrentText${i}`, inputWord.toLowerCase());
         } else  {
             localStorage.setItem(`vacDayCurrentText${i}`, vacDayInput[i].placeholder)
@@ -392,33 +381,59 @@ function generateRandomWeek(){ // programma principale che verrà azionato dal b
     appendTranslatedTableToDom(translatedTurns);    
 }
 
+function sobstituteI(inputWord){
+    if ( inputWord[inputWord.length-1] === "i"){
+        inputWord = inputWord.split('')
+        inputWord.splice(inputWord.length-1, 1, "ì")
+        inputWord = inputWord.join('')
+    } return inputWord;
+}
+
+function specialRemoveIVacDay(inputWord){
+    // per ogni elemento del nuovo array inputWord, questo viene splittato per controllare ogni lettera
+    for (j in inputWord) {
+        inputWord[j] = inputWord[j].split("");
+        // prima di tutto se alla fine della parola troviamo una virgola, togliamo quella virgola
+        if (inputWord[j][inputWord[j].length-1] === ","){
+            inputWord[j].splice(inputWord[j].length-1, 1)
+        }   
+        // e poi se alla fine della parola troviamo una i senza accento, la sostituiamo con una ì accentata per poter passare il dato più facilmente al blocco dati 
+        if (inputWord[j][inputWord[j].length-1] === "i"){
+            inputWord[j].splice(inputWord[j].length-1, 1, "ì")
+        }   inputWord[j] = inputWord[j].join('') // <== ricolleghiamo tutte le lettere per ogni eleme} tno dell'array inputWord
+    }   inputWord = inputWord.join(" "); // <== ricolleghiamo gli elementi dell'array per costruire nuovamente la stringa, ora fixata e pronta per essere data al local storage
+    return inputWord;
+}   
 
 
 
 /*
 
-document.createElement("")
-
-
-
-function requestDays(worker, day, period){
-    if (colleaguesList[worker].requestedDay.()){}
+function displayRequestDayInput (){
+    for (let i = 0; i<vrequestDayInput.length; i++){
+        requestDayInput[i].value = null
+        requestDayInput[i].placeholder = localStorage.getItem(`vacDayCurrentText${i}`);
+        requestDayInput[i].style.display = "block";
+        requestDayText[i].style.display = "none";
+    }
 }
 
-
-
-*/
-
-
-
-
-/*
-function generateWorkingList(workingList, day){
-    for (const worker in colleaguesList) {
-        if (colleaguesList[worker].freeDay.includes(week[day].d)  || colleaguesList[worker].vacationDays.includes(week[day].d)) {
-            continue;
-        } workingList.push(colleaguesList[worker].name);
-    } 
-    return workingList;
+function displayRequestDayText(){
+    for (let i = 0; i<requestDayText.length; i++){
+    // settiamo la key in localstorage, il nome è sempre lo stesso, ma affianco al nome abbiamo un numero 
+    // dinamico preso dall'attuale indice del loop. il valore della key è quello dell'input attuale
+    // piccolo if/else per continuare a salvare il placeholder anche dopo che abbiamo azzerato i valori
+    if (requestDayInput[i].value !== ""){
+        let inputWord = requestDayInput[i].value
+        inputWord.split
+        localStorage.setItem(`requestDayCurrentText${i}`, inputWord.toLowerCase());
+    } else  {
+        localStorage.setItem(`requestDayCurrentText${i}`, requestDayInput[i].placeholder)
+    };
+        requestDayInput[i].style.display = "none";
+        requestDayText[i].textContent = localStorage.getItem(`requestDayCurrentText${i}`);
+        requestDayText[i][i].style.display = "block"
+    }
 }
+
 */
