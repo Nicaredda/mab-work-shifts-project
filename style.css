@@ -32,6 +32,10 @@ th {
     border: 2px solid rgb(14, 0, 0);
     border-radius: 10px;
     background-color:rgba(255, 6, 6, 0);
+    margin-right: 20%;
+    padding: 0.8%;
+        flex:0 0 auto;
+
 }
 
 #assignmentButton {
@@ -74,11 +78,55 @@ th {
 #weekTable {
     display: flex;
     flex-direction:column;
-    width:500px;
     padding: 10px;
     margin: 5px;
     font-size: 18px;
     background-color: rgba(250, 246, 10, 0.603);
     border-radius: 3cap;
     border: 3px solid black;
+}
+
+#weekContainer {
+    display:flex;
+    flex-direction: column;
+    align-self: flex-start;
+    justify-self:flex-start ;
+}
+
+#colleaguesAndRequests {
+    display: flex;
+    flex-direction: row; 
+    justify-content:space-between;
+}
+
+#requestTable {
+    flex:0 0 auto;
+    
+}
+
+.checkboxCell {
+    width: 60px;
+    height: min-content;
+}
+
+.checkboxM {
+    accent-color: yellow;
+}
+
+.checkboxS {
+    accent-color: rgb(5, 66, 199);
+
+}
+
+#requestButton {
+    align-self: flex-start;
+    border-radius: 130%;
+    font-size: large;
+    background-color: blue;
+    border: 2px solid black;
+    font-family: monospace;
+    font-weight: 1000;
+    margin-top: 5px;
+    padding:8px;
+    color: aliceblue;
 }

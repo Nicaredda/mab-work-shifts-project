@@ -223,7 +223,10 @@ function randomNumber(list) {
     return randomResult;
 }
 function removeWeekTable(){ // rimuoviamo la week generata cosi che non le stacka l'una sopra l'altra. Son solo un mucchio di div e br
-    weekTable.remove(); 
+    weekTable = document.querySelector("#weekTable");
+    if (weekTable){
+        weekTable.remove();
+    }
 }
 function generateWorkingList(workingList, day){
     for (const worker in colleaguesList) {
@@ -289,15 +292,15 @@ function translateTurns(){
 
 function appendTranslatedTableToDom(translatedTurns){   
     const weekTable = document.createElement(`table`);
+    const weekContainer = document.querySelector("#weekContainer")
     weekTable.id = "weekTable"
-    document.body.append(weekTable)     
+    weekContainer.append(weekTable);
     
     for (const dayName in translatedTurns) {
         
         const day = translatedTurns[dayName];
         
         let nomeGiorno = ` ${dayName.toUpperCase()} `;
-        console.log(nomeGiorno);
         
         let element = document.createElement(`th`);
         element.classList.add("weekDays")
@@ -307,7 +310,6 @@ function appendTranslatedTableToDom(translatedTurns){
         weekTable.append(nextLine)
         
         let mattinaMuseo = `Mattina Museo: ${day.morning.museo.join(", ")}`;
-        console.log(mattinaMuseo);
 
         element = document.createElement(`tr`);
         element.textContent = mattinaMuseo
@@ -315,7 +317,6 @@ function appendTranslatedTableToDom(translatedTurns){
         weekTable.append(nextLine)
 
         let mattinaNecropoli = `Mattina Necropoli:, ${day.morning.necropoli.join(", ")}`;
-        console.log(mattinaNecropoli);
         
         element = document.createElement(`tr`);
         element.textContent = mattinaNecropoli
@@ -323,7 +324,6 @@ function appendTranslatedTableToDom(translatedTurns){
         weekTable.append(nextLine)
         
         let seraMuseo = `Sera Museo: ${day.evening.museo.join(", ")}`;
-        console.log(seraMuseo)
         
         element = document.createElement(`tr`);
         element.textContent = seraMuseo
@@ -331,7 +331,6 @@ function appendTranslatedTableToDom(translatedTurns){
         weekTable.append(nextLine)
         
         let seraNecropoli = `Sera Necropoli: ${day.evening.necropoli.join(", ")}`;
-        console.log(seraNecropoli);
 
         element = document.createElement(`tr`);
         element.textContent = seraNecropoli
@@ -351,9 +350,9 @@ const generateWeekButton = document.getElementById("generateWeek")
 generateWeekButton.addEventListener("click", generateRandomWeek);
 generateWeekButton.addEventListener("click", hideHint);
 
-
+removeWeekTable();
 function generateRandomWeek(){ // programma principale che verrà azionato dal bottone
-    removeWeekTable()
+    removeWeekTable();
     for (const day in week){
         let alternated = getAlternatedFromStorage();
         let workingList = [] 
@@ -401,35 +400,85 @@ function specialRemoveIVacDay(inputWord){
     return inputWord;
 }   
 
-
-
-/*
-
-function displayRequestDayInput (){
-    for (let i = 0; i<vrequestDayInput.length; i++){
-        requestDayInput[i].value = null
-        requestDayInput[i].placeholder = localStorage.getItem(`vacDayCurrentText${i}`);
-        requestDayInput[i].style.display = "block";
-        requestDayText[i].style.display = "none";
+function removeRequestTable(){ // rimuoviamo la week generata cosi che non le stacka l'una sopra l'altra. Son solo un mucchio di div e br
+    requestTable = document.querySelector("#requestTable");
+    if (requestTable){
+        requestTable.remove();
     }
 }
 
-function displayRequestDayText(){
-    for (let i = 0; i<requestDayText.length; i++){
-    // settiamo la key in localstorage, il nome è sempre lo stesso, ma affianco al nome abbiamo un numero 
-    // dinamico preso dall'attuale indice del loop. il valore della key è quello dell'input attuale
-    // piccolo if/else per continuare a salvare il placeholder anche dopo che abbiamo azzerato i valori
-    if (requestDayInput[i].value !== ""){
-        let inputWord = requestDayInput[i].value
-        inputWord.split
-        localStorage.setItem(`requestDayCurrentText${i}`, inputWord.toLowerCase());
-    } else  {
-        localStorage.setItem(`requestDayCurrentText${i}`, requestDayInput[i].placeholder)
-    };
-        requestDayInput[i].style.display = "none";
-        requestDayText[i].textContent = localStorage.getItem(`requestDayCurrentText${i}`);
-        requestDayText[i][i].style.display = "block"
+removeRequestTable();
+function createRequestTable() {
+    removeRequestTable();
+    requestTable =document.createElement("table")
+    requestTable.id = "requestTable"
+    let colleaguesAndRequests = document.querySelector("#colleaguesAndRequests")
+    colleaguesAndRequests.append(requestTable);
+
+    let weekName = document.createElement("th");
+    requestTable.append(weekName);
+
+    for (const i in week) {
+        let weekName = document.createElement("th");
+        weekName.textContent = week[i].d
+        requestTable.append(weekName);
+    }
+
+    for (const i in colleaguesList) {
+        let colleagueRow = document.createElement("tr")
+        colleagueRow.id= colleaguesList[i].name
+        requestTable.append(colleagueRow);
+
+        let colleagueCell = document.createElement("td")
+        colleagueCell.textContent = colleaguesList[i].name
+        colleagueRow.append(colleagueCell);
+
+        for (const j in week) {
+            let checkboxCell = document.createElement("td") 
+            checkboxCell.className = "checkbox"
+            checkboxCell.id = week[j].d
+            colleagueRow.append(checkboxCell);
+        
+            let inputCheckboxM = document.createElement("input")
+            inputCheckboxM.className = "checkboxM checkbox"
+            inputCheckboxM.id = "mattina"
+            inputCheckboxM.addEventListener("change", check)
+            inputCheckboxM.type = "checkbox"
+            checkboxCell.append("M", inputCheckboxM);
+
+            let inputCheckboxS = document.createElement("input")
+            inputCheckboxS.className = "checkboxS checkbox"
+            inputCheckboxS.id = "sera"
+            inputCheckboxS.type = "checkbox"
+            inputCheckboxS.addEventListener("change", check)
+            checkboxCell.append("S", inputCheckboxS);
+        }
     }
 }
 
-*/
+
+let requestButton = document.querySelector("#requestButton")
+requestButton.addEventListener("click", createRequestTable)
+
+// questa viene runnata ad ogni interazione con le checkbox della tabella richieste
+let object = []
+function check (){
+    let check = this.checked;
+
+    if (check === true){
+        //this.parentNode.parentNode.id equivale all'id della row del collega; 
+        // this.parentNode.id equivale invece alla cella sotto il nome del day della week di riferimento
+        // this.id è il nome della singola checkbox, che può essere o mattina o sera
+        console.log(`${this.parentNode.parentNode.id} ${this.parentNode.id} ${this.id} is being checked`)
+        let name = this.parentNode.parentNode.id
+        let day = this.parentNode.id
+        let period = this.id
+        object.push({"name":name, "day":day, "period":period})
+    } console.log(object)
+}
+
+function confirmRequests (){
+    for (i in colleaguesList){
+        if (colleaguesList[i].name ===)
+    }
+}

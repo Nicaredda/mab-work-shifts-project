@@ -10,70 +10,86 @@
 
 <body>
 
-<!-- A table that other than recapping the colleague status for the week, allows to switch to changing mode, and input the text for freedays and vacation days-->
-    <table style="width: 30%;" id="colleaguesList"> 
-        <h1>Tabella colleghi</h1>
-        <p id="hint"></span>Modifica i valori <span style="color: rgb(192, 48, 22)"><b> Giorno Libero </b></span> e <span style="color: rgb(73, 143, 4)"><b>Giorni di ferie</b></span> 
-           <br>e genera una nuova settimana
-        </p>
-        <tr id="th"> <th>Colleghi</th> <th style="color:rgb(192, 48, 22) ;">Giorno libero</th> <th style="color: rgb(73, 143, 4)">Giorni di ferie</th></tr> 
-        <tr> 
-            <td>michela</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr> 
-            <td>manola</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr> 
-            <td>simona</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr> 
-            <td>matteo</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr>  
-            <td>daniela</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr> 
-            <td>annamaria</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr> 
-            <td>grazia</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr> 
-            <td>luisella</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr> 
-            <td>ritaP</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-        <tr> 
-            <td>rita</td>
-            <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
-            <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
-        </tr>
-    </table>
+
+    <h1>Tabella colleghi</h1>
+    <p id="hint"></span>Modifica i valori <span style="color: rgb(192, 48, 22)"><b> Giorno Libero </b></span> e <span style="color: rgb(73, 143, 4)"><b>Giorni di ferie</b></span> 
+    <br>e genera una nuova settimana
+    
+    
+    
+    <div id="colleaguesAndRequests">
+    <!-- A table that other than recapping the colleague status for the week, allows to switch to changing mode, and input the text for freedays and vacation days-->
+        <table style="width: 30%;" id="colleaguesList"> 
+            </p>
+            <tr id="th"> <th>Colleghi</th> <th style="color:rgb(192, 48, 22) ;">Giorno libero</th> <th style="color: rgb(73, 143, 4)">Giorni di ferie</th></tr> 
+            <tr> 
+                <td>michela</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr> 
+                <td>manola</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr> 
+                <td>simona</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr> 
+                <td>matteo</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr>  
+                <td>daniela</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr> 
+                <td>annamaria</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr> 
+                <td>grazia</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr> 
+                <td>luisella</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr> 
+                <td>ritaP</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+            <tr> 
+                <td>rita</td>
+                <td class="freeDayCell"><span class="freeDayText"></span><input type="text" class="freeDayInput"></td>
+                <td class="vacDayCell"><span class="vacDayText"></span><input type="text" class="vacDayInput"></td>
+            </tr>
+        </table>
+
+        <h1 style="height: min-content;">Tabella richieste NON FUNZIONA ANCORA (┬┬﹏┬┬) </h1>
+
+        
+            <button id= "requestButton"> Richieste</button>
+        
+
+    </div>
 
     <button id = "assignmentButton"> Modifica</button>
 
-    <button id="generateWeek">Genera Nuova Settimana</button>
     
-    <div id="weekTable"></div>
+    <div id="weekContainer">
+        <button id="generateWeek">Genera Nuova Settimana</button>
+    </div>
+
+
 </body>
 
 </html>
