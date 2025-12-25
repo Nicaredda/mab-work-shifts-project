@@ -476,9 +476,10 @@ function check (){
         object.push({"name":name, "day":day, "period":period})
     } console.log(object)
 }
-
+/*
 function confirmRequests (){
     for (i in colleaguesList){
         if (colleaguesList[i].name ===)
     }
 }
+*/
