@@ -407,6 +407,7 @@ function removeRequestTable(){ // rimuoviamo la week generata cosi che non le st
     }
 }
 
+let switchers = false
 removeRequestTable();
 function createRequestTable() {
     removeRequestTable();
@@ -453,18 +454,20 @@ function createRequestTable() {
             inputCheckboxS.addEventListener("change", check)
             checkboxCell.append("S", inputCheckboxS);
         }
-    }
+    } 
 }
 
 
 let requestButton = document.querySelector("#requestButton")
-requestButton.addEventListener("click", createRequestTable)
+
+requestButton.addEventListener("click", buttonRequestIsPressed)
+
 
 // questa viene runnata ad ogni interazione con le checkbox della tabella richieste
-let object = []
+let array = []
+
 function check (){
     let check = this.checked;
-
     if (check === true){
         //this.parentNode.parentNode.id equivale all'id della row del collega; 
         // this.parentNode.id equivale invece alla cella sotto il nome del day della week di riferimento
@@ -473,13 +476,86 @@ function check (){
         let name = this.parentNode.parentNode.id
         let day = this.parentNode.id
         let period = this.id
-        object.push({"name":name, "day":day, "period":period})
-    } console.log(object)
+        array.push({"name":name, "day":day, "period":period})
+    } console.log(array) 
+    setters();
 }
+function buttonRequestIsPressed() {
+    if (switchers === false){
+        createRequestTable();
+        requestIsActive(requestButton);
+        switchers = true;
+    } else {
+       // confirmRequests();
+        removeRequestTable();
+        requestIsNotActive(requestButton);
+        switchers = false;
+    }
+}
+
+
+function requestIsActive (requestButton){
+    requestButton.style.backgroundColor = "green";
+    requestButton.textContent = "Conferma Richieste";
+}
+
+function requestIsNotActive (requestButton){
+    requestButton.style.backgroundColor = "blue";
+    requestButton.textContent = "Aggiungi Richieste";
+}
+
+function compareTwoObjects(objectA, objectB) {
+    objectA.name === objectB.name
+    objectA.day === objectB.day
+    objectA.period === objectB.period
+}
+
 /*
 function confirmRequests (){
     for (i in colleaguesList){
-        if (colleaguesList[i].name ===)
+        if (colleaguesList[i].name === array ){
+        }
     }
 }
 */
+
+
+// algoritmo di controllo che itera per ogni elemento di una lista, controllando quello stesso elemento con ogni altro elemento sucessivo della lista
+// lo mando due volte perchè lo splice, cambiando index agli elementi in lista, si perde alcune associazioni
+
+
+function checkArrPerTwo(arr) {
+    arr = checkArr(arr);
+    arr = checkArr(arr);
+    return arr;
+}
+function checkArr(arr){
+    for (let i= 0; i<arr.length; i++){
+        let j = i+1
+        while((j<arr.length)) {
+            arr[i]===arr[j] ? console.log(`${arr[i]} is equal to ${arr[j]}`) : console.log((`${arr[i]} is different to ${arr[j]}`))
+            if (arr[i]===arr[j]){
+                arr.splice(j, 1)
+            }
+            j++
+        } console.log(`New array is: ${arr}. Index check is completed, proceding to next index`)
+    } 
+    return arr;
+}
+
+
+
+//Questa giu è una porcata, e ok. ma mi è utile come allenamento e monito. probabilmente posso rendere il giorno una chiave, 
+// e associargli il valore del turno richiesto; eg. lunedì: mattina. questa chiave/valore può trovarsi dentro un oggetto name 
+// rappreserntante il collega di riferimento
+
+let setName = new Set();
+let setDay = new Set();
+let setPeriod = new Set();
+function setters(){
+    for (i in array){
+        setName.add(array[i].name)
+        setDay.add(array[i].day)
+        setPeriod.add(array[i].period)
+    } console.log(setName, setDay, setPeriod)
+}
