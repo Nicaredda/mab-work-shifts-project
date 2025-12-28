@@ -477,8 +477,7 @@ function check (){
         let day = this.parentNode.id
         let period = this.id
         array.push({"name":name, "day":day, "period":period})
-    } console.log(array) 
-    setters();
+    } console.log(array)
 }
 function buttonRequestIsPressed() {
     if (switchers === false){
@@ -486,7 +485,7 @@ function buttonRequestIsPressed() {
         requestIsActive(requestButton);
         switchers = true;
     } else {
-       // confirmRequests();
+        getRequests();
         removeRequestTable();
         requestIsNotActive(requestButton);
         switchers = false;
@@ -509,15 +508,6 @@ function compareTwoObjects(objectA, objectB) {
     objectA.day === objectB.day
     objectA.period === objectB.period
 }
-
-/*
-function confirmRequests (){
-    for (i in colleaguesList){
-        if (colleaguesList[i].name === array ){
-        }
-    }
-}
-*/
 
 
 // algoritmo di controllo che itera per ogni elemento di una lista, controllando quello stesso elemento con ogni altro elemento sucessivo della lista
@@ -545,17 +535,28 @@ function checkArr(arr){
 
 
 
-//Questa giu è una porcata, e ok. ma mi è utile come allenamento e monito. probabilmente posso rendere il giorno una chiave, 
-// e associargli il valore del turno richiesto; eg. lunedì: mattina. questa chiave/valore può trovarsi dentro un oggetto name 
-// rappreserntante il collega di riferimento
 
-let setName = new Set();
-let setDay = new Set();
-let setPeriod = new Set();
-function setters(){
-    for (i in array){
-        setName.add(array[i].name)
-        setDay.add(array[i].day)
-        setPeriod.add(array[i].period)
-    } console.log(setName, setDay, setPeriod)
+
+
+
+
+
+// ci siamo: 
+
+
+function getRequests(){
+    let arr = document.querySelectorAll(`input[type="checkbox"]`)
+    let requestArray = [];
+    let name
+    let day
+    for (let i=0;i<arr.length;i++){
+        name = arr[i].parentElement.parentElement.id;
+        day = arr[i].parentElement.id
+        period = arr[i].id
+        if (arr[i].checked){
+            requestArray.push({name, day, period});
+        } 
+       // requestArray.push()
+       // console.log(arr[i].id, arr[i].parentNode.id, arr[i].parentNode.parentNode.id)
+    } console.log(requestArray);
 }
