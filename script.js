@@ -236,7 +236,23 @@ function generateWorkingList(workingList, day){
     } 
     return workingList;
 }
+
 function assignAndRemoveFromList(workingList, day, key){
+
+
+    // STO LAVORANDO QUA SOTTO
+    for (let nome = 0; j<workingList.length; j++){
+        for (let colleaguesNome = 0; colleaguesNome<colleaguesList.length; colleaguesNome++){
+            if (workingList[nome] === colleaguesList[colleaguesNome].name){
+                let oggettoRequestedDay = colleaguesList[colleaguesNome].name 
+                for (let giornoRichiesto=0; giornoRichiesto<oggettoRequestedDay.length; giornoRichiesto++){
+                    if (oggettoRequestedDay[giornoRichiesto].key){} //qua devo prendere la chiave di requestedDays e il valore, ma è un po'complicato
+                }
+            }
+        }
+    }
+    // STO LAVORANDO QUA SOPRA
+
     let randomIndex = randomNumber(workingList);
     let randomColleague = workingList[randomIndex];
     week[day][key] = randomColleague;
@@ -250,6 +266,8 @@ function assignAndRemoveFromList(workingList, day, key){
         workingList.splice(randomIndex,1,)
     } return workingList;
 }
+
+
 function translateTurns(){
     let turns = {
         lunedì:    { morning: { museo: [], necropoli: [] }, evening: { museo: [], necropoli: [] } },
@@ -481,14 +499,13 @@ function check (){
 }
 function buttonRequestIsPressed() {
     if (switchers === false){
+        cleanColleagueRequestsDay();
         createRequestTable();
         requestIsActive(requestButton);
         switchers = true;
     } else {
         getRequests();
-        removeRequestTable();
-        requestIsNotActive(requestButton);
-        switchers = false;
+        
     }
 }
 
@@ -535,15 +552,6 @@ function checkArr(arr){
 
 
 
-
-
-
-
-
-
-// ci siamo: 
-
-
 function getRequests(){
     let arr = document.querySelectorAll(`input[type="checkbox"]`)
     let requestArray = [];
@@ -553,10 +561,42 @@ function getRequests(){
         name = arr[i].parentElement.parentElement.id;
         day = arr[i].parentElement.id
         period = arr[i].id
-        if (arr[i].checked){
+
+        if (i % 2 === 0 && arr[i].checked && arr[i+1].checked ){
+            console.error(`${arr[i].parentElement.parentElement.id} at ${arr[i].parentElement.id} has two periods assigned`)
+            alert(`${arr[i].parentElement.parentElement.id} at ${arr[i].parentElement.id} has two periods assigned`)
+            return;
+        }  
+    }  
+    
+    for (let i=0;i<arr.length;i++){
+        name = arr[i].parentElement.parentElement.id;
+        day = arr[i].parentElement.id
+        period = arr[i].id
+            if (arr[i].checked){
             requestArray.push({name, day, period});
-        } 
-       // requestArray.push()
-       // console.log(arr[i].id, arr[i].parentNode.id, arr[i].parentNode.parentNode.id)
+            removeRequestTable();
+            requestIsNotActive(requestButton);
+            switchers = false;
+            }
     } console.log(requestArray);
+    
+    for (let i=0; i<requestArray.length; i++){
+        for (let j=0; j<colleaguesList.length; j++)
+        if (requestArray[i].name === colleaguesList[j].name){
+            
+            let object = {[requestArray[i].day] : requestArray[i].period}
+           
+            colleaguesList[j].requestedDay.push(object);
+        }
+    } console.log(colleaguesList)
+    return requestArray;
+}
+
+
+
+function cleanColleagueRequestsDay(){
+    for (let i=0; i<colleaguesList.length; i++){
+        colleaguesList[i].requestedDay = []
+    }
 }
