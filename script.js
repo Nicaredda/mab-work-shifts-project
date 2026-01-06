@@ -241,18 +241,6 @@ function assignAndRemoveFromList(workingList, day, key){
 
 
     // STO LAVORANDO QUA SOTTO
-    for (let nome = 0; j<workingList.length; j++){
-        for (let colleaguesNome = 0; colleaguesNome<colleaguesList.length; colleaguesNome++){
-            if (workingList[nome] === colleaguesList[colleaguesNome].name){
-                let oggettoRequestedDay = colleaguesList[colleaguesNome].name 
-                for (let giornoRichiesto=0; giornoRichiesto<oggettoRequestedDay.length; giornoRichiesto++){
-                    if (oggettoRequestedDay[giornoRichiesto].key){} //qua devo prendere la chiave di requestedDays e il valore, ma è un po'complicato
-                }
-            }
-        }
-    }
-    // STO LAVORANDO QUA SOPRA
-
     let randomIndex = randomNumber(workingList);
     let randomColleague = workingList[randomIndex];
     week[day][key] = randomColleague;
