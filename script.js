@@ -238,6 +238,7 @@ function generateWorkingList(workingList, day){
 }
 
 function assignAndRemoveFromList(workingList, day, key){
+    
     let randomIndex = randomNumber(workingList);
     let randomColleague = workingList[randomIndex];
     week[day][key] = randomColleague;
